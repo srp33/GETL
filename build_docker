@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sudo docker build -t geo_transfer_learning .
+sudo docker tag geo_transfer_learning srp33/geo_transfer_learning:v1
+
+#sudo docker login
+#sudo docker push srp33/geo_transfer_learning:v1

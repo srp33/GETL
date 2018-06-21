@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo docker run -t -i --rm srp33/geo_transfer_learning:v1 /bin/bash
