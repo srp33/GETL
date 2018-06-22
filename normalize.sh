@@ -2,43 +2,21 @@
 
 #set -o errexit
 
-downloadDir=Downloads
 celDir=CEL
 txtDir=TXT
 tmpFile=/tmp/getl_normalize
 
-mkdir -p $downloadDir $celDir $txtDir
+mkdir -p $celDir $txtDir
 
-if [ ! -f GSM.txt ]
-then
-  python ParseGEOIDs.py GEO_Search_Results.txt > GSM.txt
-fi
-
-#for gsm in $(cat GSM.txt)
-#for gsm in $(head -n 25000 GSM.txt)
-for gsm in $(head -n 25 GSM.txt)
-do
-  celFilePath=$celDir/$gsm.CEL.gz
-
-  if [ -f $celFilePath ]
-  then
-    continue
-  fi
-
-  echo $gsm
-  timeout 10 Rscript --vanilla download.R $gsm $downloadDir $celFilePath
-done
-#exit
-
-#### Need to check each CEL file and make sure they are the proper platform.
-####   See code in /Data/CMAP
-####   Could also check size and make sure it's in an acceptable range.
-####   Delete them if they are not.
+#### TODO:
+####   Need to check each CEL file and make sure they are the proper platform.
+####     See code in /Data/CMAP
+####     Could also check size and make sure it's in an acceptable range.
+####     Delete them if they are not.
 
 rm -f $tmpFile
 
-#for celFilePath in $celDir/*
-for celFilePath in $(ls $celDir/* | head)
+for celFilePath in $celDir/*
 do
   sampleID=${celFilePath/\.CEL\.gz/}
   sampleID=$(basename $sampleID)
