@@ -1,10 +1,11 @@
 #!/bin/bash
 
-set -o errexit
+#set -o errexit
 
 downloadDir=Downloads
 celDir=CEL
 txtDir=TXT
+tmpFile=/tmp/getl_normalize
 
 mkdir -p $downloadDir $celDir $txtDir
 
@@ -14,7 +15,8 @@ then
 fi
 
 #for gsm in $(cat GSM.txt)
-for gsm in $(head -n 10 GSM.txt)
+#for gsm in $(head -n 25000 GSM.txt)
+for gsm in $(head -n 25 GSM.txt)
 do
   celFilePath=$celDir/$gsm.CEL.gz
 
@@ -24,25 +26,38 @@ do
   fi
 
   echo $gsm
-  Rscript --vanilla download.R $gsm $downloadDir $celFilePath
+  timeout 10 Rscript --vanilla download.R $gsm $downloadDir $celFilePath
 done
-exit
+#exit
 
-for celFilePath in $celDir/*
+#### Need to check each CEL file and make sure they are the proper platform.
+####   See code in /Data/CMAP
+####   Could also check size and make sure it's in an acceptable range.
+####   Delete them if they are not.
+
+rm -f $tmpFile
+
+#for celFilePath in $celDir/*
+for celFilePath in $(ls $celDir/* | head)
 do
   sampleID=${celFilePath/\.CEL\.gz/}
   sampleID=$(basename $sampleID)
   txtFilePath=$txtDir/$sampleID
 
-  if [ -f $txtFilePath ]
+  if [ -f $txtFilePath.gz ]
   then
     continue
   fi
 
-  Rscript --vanilla scanNormalize.R $sampleID $celFilePath $txtFilePath
-break
-
+  echo "Rscript --vanilla scanNormalize.R $sampleID $celFilePath $txtFilePath; gzip $txtFilePath" >> $tmpFile
 done
+
+if [ -f $tmpFile ]
+then
+  chmod 777 $tmpFile
+    parallel -a $tmpFile --ungroup --max-procs 42
+  rm -f $tmpFile
+fi
 
 exit
 
@@ -164,3 +179,5 @@ done
 
 # Concatenate all Score Files
 tail -q -n 1 Expression_Data/*/QualityScores/* >> QualityScoresAll.txt
+
+#### Migrate this to run within the container after you get everything working...
