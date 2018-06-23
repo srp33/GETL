@@ -33,7 +33,7 @@ done
 if [ -f $tmpFile ]
 then
   chmod 777 $tmpFile
-    parallel -a $tmpFile --ungroup --max-procs 42
+  parallel -a $tmpFile --ungroup --max-procs 40
   rm -f $tmpFile
 fi
 

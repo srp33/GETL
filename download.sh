@@ -31,13 +31,15 @@ function tryDownload {
     fi
 
     echo $gsm
-    timeout 10 Rscript --vanilla download.R $gsm $downloadDir $celFilePath
-    sleep 2
+    mkdir -p $downloadDir/$gsm
+    timeout 10 Rscript --vanilla download.R $gsm $downloadDir/$gsm $celFilePath
+    rm -rf $downloadDir/$gsm
+    sleep 1
   done
 }
 
 for i in {1..10}
 do
   tryDownload
-  sleep 300
+  sleep 120
 done
