@@ -2,18 +2,16 @@
 
 set -o errexit
 
-txtDir=TXT
+rowDir=Rows
 matrixDir=Matrices
-matrixFile=$matrixDir/GEO_GPL570_SCAN_$(ls $txtDir | wc -l)samples_$(date +%Y-%m-%d).tsv.gz
+matrixFile=$matrixDir/GEO_GPL570_SCAN_$(ls $rowDir | wc -l)samples_$(date +%Y-%m-%d).tsv.gz
 
 mkdir -p $matrixDir
 rm -f $matrixFile
 
-firstFile=$(ls $txtDir/*.gz | head -n 1)
+cp $rowDir/.header.gz $matrixFile
 
-for f in $txtDir/*.gz
-#for f in $(ls $txtDir/*.gz | head)
+for f in $rowDir/*.gz
 do
-  echo $f
-  python BuildMatrix.py $f $firstFile $matrixFile
+  zcat $f | gzip >> $matrixFile
 done

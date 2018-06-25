@@ -14,8 +14,8 @@ then
 fi
 
 function tryDownload {
-  #for gsm in $(cat GSM.txt)
-  for gsm in $(head -n 50000 GSM.txt)
+  #for gsm in $(head -n 50000 GSM.txt)
+  for gsm in $(cat GSM.txt)
   do
     celFilePath=$celDir/$gsm.CEL.gz
     txtFilePath=$txtDir/$gsm.gz

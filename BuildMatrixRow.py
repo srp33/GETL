@@ -2,7 +2,8 @@ import sys, gzip
 
 inFilePath = sys.argv[1]
 firstFilePath = sys.argv[2]
-outFilePath = sys.argv[3]
+outHeaderFilePath = sys.argv[3]
+outFilePath = sys.argv[4]
 
 isFirst = inFilePath == firstFilePath
 
@@ -30,10 +31,11 @@ if genes != firstGenes:
     print("The genes in " + inFilePath + " do not match those in " + firstFilePath + ".")
     sys.exit(1)
 
-outFile = gzip.open(outFilePath, 'a')
-
 if isFirst:
-    outFile.write("\t".join([""] + genes) + "\n")
+    outHeaderFile = gzip.open(outHeaderFilePath, 'w')
+    outHeaderFile.write("\t".join([""] + genes) + "\n")
+    outHeaderFile.close()
 
+outFile = gzip.open(outFilePath, 'w')
 outFile.write("\t".join([sampleID] + values) + "\n")
 outFile.close()
