@@ -40,11 +40,11 @@ function tryDownload {
   done
 }
 
-#for i in {1..10}
-for i in {1..3}
+for i in {1..10}
+#for i in {1..3}
 do
   echo Iteration $i
   tryDownload
-#  sleep 120
-  sleep 10
+  sleep 120
+#  sleep 10
 done
