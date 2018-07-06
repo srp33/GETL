@@ -5,7 +5,8 @@ outFilePath <- commandArgs()[9]
 suppressPackageStartupMessages(library(GEOquery))
   
 downloaded <- getGEOSuppFiles(GSMID, makeDirectory=FALSE, baseDir=downloadDir)
-celIndex <- which(grepl("CEL\\.", rownames(downloaded), ignore.case=TRUE))
+#celIndex <- which(grepl("CEL\\.", rownames(downloaded), ignore.case=TRUE))
+celIndex <- which(grepl("\\.CEL", rownames(downloaded), ignore.case=TRUE))
 
 if (any(celIndex))
 {

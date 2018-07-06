@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#135804
+
 #set -o errexit
 
 downloadDir=Downloads
@@ -38,8 +40,11 @@ function tryDownload {
   done
 }
 
-for i in {1..10}
+#for i in {1..10}
+for i in {1..3}
 do
+  echo Iteration $i
   tryDownload
-  sleep 120
+#  sleep 120
+  sleep 10
 done

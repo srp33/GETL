@@ -8,7 +8,7 @@ rowDir=Rows
 mkdir -p $rowDir
 #rm -f $rowDir/*
 
-firstFile=$(ls $txtDir/*.gz | head -n 1)
+firstFile=$(for f in TXT/*; do echo $f; break; done | head -n 1)
 
 #for f in $(ls $txtDir/*.gz | head)
 for f in $txtDir/*.gz
