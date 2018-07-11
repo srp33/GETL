@@ -10,10 +10,12 @@ txtDir=TXT
 
 mkdir -p $downloadDir $celDir
 
-if [ ! -f GSM.txt ]
-then
-  python ParseGEOIDs.py GEO_Search_Results.txt > GSM.txt
-fi
+#if [ ! -f GSM.txt ]
+#then
+#  python ParseGEOIDs.py GEO_Search_Results.txt > GSM.txt
+  python ParseGEOMapping.py GEO_Search_Results.txt > GSE_GSM.txt
+#fi
+exit
 
 function tryDownload {
   #for gsm in $(head -n 50000 GSM.txt)
