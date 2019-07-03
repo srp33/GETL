@@ -12,6 +12,6 @@ for line in inFile:
         series = line.rstrip("\n").split("Series: ")[1].split(" Dataset: ")[0].split(" Datasets: ")[0]
     if line.startswith("Sample\t\tAccession: "):
         gsm = line.split("Sample\t\tAccession: ")[1].split("\tID: ")[0]
-        print("{}\t{}".format(series, gsm))
+        print("{}\t{}".format(gsm, series))
 
 inFile.close()

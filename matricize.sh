@@ -11,9 +11,11 @@ rm -f $matrixFile
 
 zcat $rowDir/.header.gz > $matrixFile
 
-for f in $rowDir/*.gz
+#for f in $rowDir/*.gz
+for f in $(ls $rowDir | head -n 1000)
 do
-  zcat $f >> $matrixFile
+  #zcat $f >> $matrixFile
+  zcat $rowDir/$f >> $matrixFile
 done
 
 gzip $matrixFile
